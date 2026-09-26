@@ -1,23 +1,26 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../slices/counterSlice";
+import React, { useContext } from 'react';
+import {counterContext} from "../../context//CounterContext"
+
 
 const HomeIndex = () => {
-  const count = useSelector((state) => state.counter.value);
- 
-  const dispatch = useDispatch();
 
- 
+  const {count, setCount} = useContext(counterContext)
 
-  const handleDecrement = () => {
-    dispatch(decrement(2));
-  };
+
+  const handleIncrement = ()=>{
+    setCount((prev)=> prev+=3)
+  }
+  const handleDecrement = ()=>{
+    setCount((prev)=>prev-=3)
+  }
 
   return (
     <div>
-      <button onClick={() => dispatch(increment(2))}>Increment</button>
+      <button onClick={handleIncrement}>Increment</button>
       <h1>Count = {count}</h1>
       <button onClick={handleDecrement}>Decrement</button>
+
+      
     </div>
   );
 };
