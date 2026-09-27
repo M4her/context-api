@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Outlet,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -12,21 +13,20 @@ import ErrorIndex from "./pages/error/ErrorIndex";
 import CounterProvider from "./context/CounterContext";
 import AuthProvider from "./context/AuthContext";
 
+const AuthLayout = () => (
+  <AuthProvider>
+    <Outlet />
+  </AuthProvider>
+);
+
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<RootLayout />}>
-        <Route
-          index element={
-            <AuthProvider>
-              <HomeIndex />
-            </AuthProvider>
-          }
-        />
-        <Route path="/about" element={
-          <AuthProvider>
-          <AboutIndex />
-        </AuthProvider>} />
+        <Route element = {<AuthLayout/>}>
+          <Route index element={<HomeIndex />} />
+          <Route path="/about" element={<AboutIndex />} />
+        </Route>
         <Route path="/services" element={<ServicesIndex />} />
 
         <Route path="*" element={<ErrorIndex />} />
